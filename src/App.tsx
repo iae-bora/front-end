@@ -1,22 +1,23 @@
-import './App.css';
+//React Router DOM
+import { Route, BrowserRouter, Switch} from 'react-router-dom'
+
+
+import { AuthContextProvider } from './contexts/AuthContext';
+
+//Componentes
+import { Login } from './pages/Login'
+import { Question } from './pages/Question';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+    <AuthContextProvider>
+      <Switch>
+        <Route path="/" exact component={Login}/>
+        <Route path="/Question" component={Question}/>
+      </Switch>
+      </AuthContextProvider>
+    </BrowserRouter>
   );
 }
 
