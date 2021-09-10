@@ -1,24 +1,68 @@
+//#region Imports
 //Biblioteca responsavel por armazenar os parametros passados na rota da pagina
-import { useState } from 'react';
-
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
-
-//image
-import logoImg from '../assets/images/Logo.svg';
+import { FormEvent, SetStateAction, useState } from 'react';
+import { useHistory } from 'react-router-dom'
 
 //Componentes
 import { Button } from '../components/Button';
+
 import { LabelQuestion } from '../components/LabelQuestion';
 
-// import { useAuth } from '../hooks/userAuth';
+//Alert - Material UI
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert, {AlertProps} from '@material-ui/lab/Alert';
 
+//DatePicker
+import 'date-fns'
+import Grid from '@material-ui/core/Grid'
+import DateFnsUtils from '@date-io/date-fns'
+import { 
+    KeyboardDatePicker, 
+    MuiPickersUtilsProvider 
+} from '@material-ui/pickers';
+
+// import Button from '@material-ui/core/Button';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+
+//SCSS
 import '../styles/question.scss';
+//#endregion
+
+function Alert(props: AlertProps) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
+  
+  const useStyles = makeStyles((theme: Theme) => ({
+    root: {
+      width: '100%',
+      '& > * + *': {
+        marginTop: theme.spacing(2),
+      },
+    },
+  }));
 
 export function Question(){
     // const {user} = useAuth();
+    // const classes = useStyles();
+    const [open, setOpen] = useState(false);
 
+    const handleClick = () => {
+        setOpen(true);
+
+        // history.push('/Home')
+      };
+    
+    const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === 'clickaway') {
+        return;
+    }
+    
+        setOpen(false);
+
+        history.push('/Home')
+      };
     //#region Variaveis
+    const history = useHistory();
 
     //States de cada uma das perguntas
     const [radioQuestion1, setRadioQuestion1] = useState('');
@@ -30,6 +74,12 @@ export function Question(){
     const [radioQuestion7, setRadioQuestion7] = useState('');
     const [startDate, setStartDate] = useState<Date | null>(new Date());
 
+    const [selectedDate, setSelectedDate] = useState<Date | null>(new Date("2020-09-11T12:00:00"))
+
+    const handleDateChange = (date: SetStateAction<Date | null>) => {
+        setSelectedDate(date)
+    }
+    
     const answersQuestionOne = ["Rock","Sertanejo","Forró","Gospel","Pop","Funk","RAP"]
     const answersQuestionTwo = ["Churrasco","Caseira","Vegetariana","Fast Food","Japonesa","Italiana"]
     const answersQuestionThree = ["Drama","Ação","Aventura","Romance","Animação","Suspense","Terror","Comédia"]
@@ -47,6 +97,7 @@ export function Question(){
     positionAnswerSeven : number;
     //#endregion
     
+    //#region Functions
 function handleAnswerQuestionOne(answerText: string){
      positionAnswerOne = answersQuestionOne.indexOf(answerText);
      console.log(`Resposta 1: ${positionAnswerOne} - ${answerText}`)
@@ -82,8 +133,11 @@ function handleAnswerQuestionSeven(answerText: string){
     console.log(`Resposta 7: ${positionAnswerSeven} - ${answerText}`)
 } 
 
-function handleSendJson(){
-    // var texto = '{"atributo1": "valor 1", "atributo2": 23}';
+function handleSendJson(event: FormEvent){
+    event.preventDefault();
+//#endregion
+  
+    //#region JSON  
     var text = {"Musics": answersQuestionOne.indexOf(radioQuestion1).toString(),
                  "Foods": answersQuestionTwo.indexOf(radioQuestion2).toString(),
                  "Movies": answersQuestionThree.indexOf(radioQuestion3).toString(),
@@ -92,21 +146,22 @@ function handleSendJson(){
                  "Religions": answersQuestionSix.indexOf(radioQuestion6).toString(),
                  "HaveChildren": answersQuestionSeven.indexOf(radioQuestion7).toString(),
                  "DateBirthday": startDate?.getDate() + '/' + startDate?.getUTCMonth() + '/' + startDate?.getFullYear()}
+    //#endregion    
 
     console.log(text);
 }
-
     return(
         <div id="page-room">
             <header>
                 <div className="content">
-                    <img src={logoImg} alt="iaeBora"/>
-                <h1>Perguntas</h1>
+                    {/* <img src={logoImg} alt="iaeBora"/> */}
+                <h2>Definindo Perfil do Usuário</h2>
                 </div>
             </header>
 
             <main>
-                <form>
+                <form onSubmit={handleSendJson}>
+
                     {/* Pergunta 1 */}
                     <div className="question">
                         Qual gênero musical você mais gosta?
@@ -225,16 +280,45 @@ function handleSendJson(){
                             );
                         })}
                     </div>
-                    <div>
-                        <DatePicker selected={startDate} onChange={(date : Date | null) => setStartDate(date)}/>
+                    <div className="question">
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <Grid container justify='flex-start'>
+                                <KeyboardDatePicker
+                                    variant='dialog'
+                                    format='MM/dd/yyy'
+                                    margin='normal'
+                                    id='date-picker'
+                                    label='Data de Nascimento'
+                                    value={selectedDate}
+                                    onChange={handleDateChange}
+                                    KeyboardButtonProps ={{
+                                        'aria-label': 'change date'
+                                    }}
+                                />
+                            </Grid>
+                        </MuiPickersUtilsProvider>
                     </div>
-                </form>
-                <div className="form-footer">
-                    <Button onClick = { () => handleSendJson()}>
-                            Enviar Respostas
-                    </Button>
-                    </div>
-            </main>
-        </div>
-    );
-}
+                        <div className="form-footer">
+                            <Button
+                                type="submit"
+                                onClick={handleClick}
+                            >
+                                Enviar Respostas
+                            </Button>
+                            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                                <Alert onClose={handleClose} severity="error">
+                                    Respostas Enviadas com sucesso
+                                </Alert>
+                            </Snackbar>
+                            {/* <Alert severity="error">This is an error message!</Alert>
+                            <Alert severity="warning">This is a warning message!</Alert>
+                            <Alert severity="info">This is an information message!</Alert>
+                            <Alert severity="success">This is a success message!</Alert> */}
+                        </div>               
+                    </form>
+                </main>
+            </div>
+        );
+    }
+
+

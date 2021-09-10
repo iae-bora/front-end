@@ -14,7 +14,7 @@ export function LabelQuestion(props: LabelProps){
                    type ="radio" 
                    key ={props.text} 
                    value={props.text} 
-                   {...props}
+                   {...props}   
             /> {props.text}
         </label>
         <br/>

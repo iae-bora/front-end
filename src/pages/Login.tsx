@@ -1,99 +1,111 @@
-//Import responsavel pela navegação da aplicação - React-Router-DOM
 import { useHistory } from 'react-router-dom'
+import { FormEvent} from 'react'
 
-//Importando as imagens
-import logoImg from '../assets/images/Logo.svg'
-import googleIconImg from '../assets/images/google-icon.svg'
-
-import { Button } from '../components/Button'
-
-//Importando o hook de authentication
 import { useAuth } from '../hooks/userAuth'
 
+//Importando as imagens
+// import illustrationImg from '../assets/images/illustration.svg'
+// import logoImg from '../assets/images/logo.svg'
+// import googleIconImg from '../assets/images/google-icon.svg'
+
+//Importando o hook de authentication
+
 import '../styles/auth.scss';
-// import { FormEvent } from 'react'
-// import { useState } from 'react'
 // import { database } from '../services/firebase'
+
+
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+// import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+// import Paper from '@material-ui/core/Paper';
+// import Box from '@material-ui/core/Box';
+// import Grid from '@material-ui/core/Grid';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      height: '100vh',
+    },
+    paper: {
+      margin: theme.spacing(8, 4),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      background: '#115293',
+    },
+    form: {
+      width: '100%', // Fix IE 11 issue.
+      marginTop: theme.spacing(1),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+      background: '#115293',
+      color: '#fff',
+    },
+  }));
 
 //Criando um componente
 export function Login() {
     //Utilizando um hook para fazer a navegação - Somente dentro do componente
     const history = useHistory();
+    const classes = useStyles();
 
     //Recuperando informações de um contexto
-    const {user, signInWithGoogle} = useAuth()
+    const {signInWithGoogle} = useAuth()
 
-    // const [roomCode, setRoomCode] = useState('');
-
-    //Função responsavel por navegar para outra pagina NewRoom
-    async function handleSignIn(){
+    //Função responsavel por navegar para outra pagina NewRoom 
+    async function handleQuestions(event:FormEvent){
+        event.preventDefault();
         //Se o usuário não estiver logado
-        // if(!user){
-            await signInWithGoogle()
-        // }
-
-        //Retornando informações do usuário logado
-        console.log(user?.name)
-        console.log(user?.id)
-        console.log(user?.avatar)
-
+        await signInWithGoogle()
         //Redirecionando a outra pagina
         history.push('/Question')
     }
 
-
-    // async function handleJoinRoom(event:FormEvent) {
-    //     event.preventDefault();
-
-    //     if(roomCode.trim() === ''){
-    //         return;
-    //     }
-
-    //     //Buscando se a sala realmente existe para que o usuário posssa entrar
-    //     // const roomRef = await database.ref(`rooms/${roomCode}`).get();
-
-    //     // if(!roomRef.exists()){
-    //     //     alert('Room does not exists.');
-    //     //     return;
-    //     // }
-
-    //     //Caso exista usuário será redirecionado
-    //     // history.push(`/rooms/${roomCode}`);
-    // }
-
-
     return(
         <div id="page-auth">
             <aside>
-                <img src={logoImg} alt="Logo Iae Bora"/>
-                <strong>Realize passeios na região do ABC</strong>
-                <p>Desfrute das melhores rotas e eventos perto de você</p>
+                <strong>Descubra as melhores rotas no ABC</strong>
+                <p>Passeios e eventos mais perto de você</p>
             </aside>
             <main>
-                <div className="main-content">
-                    <Button onClick={handleSignIn} className="create-room">
-                        <img src={googleIconImg} alt="Logo do Google"></img>
-                        Entre com a conta google
-                    </Button>
-                    {/* <div className="separator">ou insira seu login</div>
-                    <form onSubmit={handleJoinRoom}>
-                        <input
-                            type="text"
-                            placeholder="Digite seu usuário"
-                            onChange = {event => setRoomCode(event.target.value)}
-                            value={roomCode}
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Sign in to Iae Bora
+                    </Typography>
+                    <form className={classes.form} noValidate>
+                        <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="address"
+                        label="Address"
+                        name="address"
+                        autoComplete="address"
+                        autoFocus
                         />
-                        <input
-                            type="text"
-                            placeholder="Digite sua senha"
-                            onChange = {event => setRoomCode(event.target.value)}
-                            value={roomCode}
-                        />
-                        <Button type="submit">
-                            Login
+                </form>
+                <Button
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                        onClick = {handleQuestions}
+                        >
+                        Sign In
                         </Button>
-                    </form> */}
-                </div>
+            </div>
             </main>
         </div>
     )
