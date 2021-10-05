@@ -1,72 +1,90 @@
 import { useHistory } from 'react-router-dom'
-import { FormEvent} from 'react'
+import { FormEvent, useState} from 'react'
+// import axios from 'axios'
+
 
 import { useAuth } from '../hooks/userAuth'
 
-//Importando as imagens
-// import illustrationImg from '../assets/images/illustration.svg'
-// import logoImg from '../assets/images/logo.svg'
-// import googleIconImg from '../assets/images/google-icon.svg'
-
-//Importando o hook de authentication
-
-import '../styles/auth.scss';
-// import { database } from '../services/firebase'
-
-
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-// import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-// import Paper from '@material-ui/core/Paper';
-// import Box from '@material-ui/core/Box';
-// import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
+import '../styles/auth.scss';
+import api from '../services/api';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-      height: '100vh',
-    },
-    paper: {
-      margin: theme.spacing(8, 4),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    avatar: {
-      margin: theme.spacing(1),
-      background: '#115293',
-    },
-    form: {
-      width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(1),
-    },
-    submit: {
-      margin: theme.spacing(3, 0, 2),
-      background: '#115293',
-      color: '#fff',
-    },
-  }));
 
 //Criando um componente
 export function Login() {
     //Utilizando um hook para fazer a navegação - Somente dentro do componente
     const history = useHistory();
     const classes = useStyles();
+    const [CEP, setCEP] = useState('');
+    const [data, setData] = useState([]);
 
     //Recuperando informações de um contexto
-    const {signInWithGoogle} = useAuth()
+    const {user, signInWithGoogle} = useAuth()
 
     //Função responsavel por navegar para outra pagina NewRoom 
-    async function handleQuestions(event:FormEvent){
+    async function handleLogin(event:FormEvent){
         event.preventDefault();
         //Se o usuário não estiver logado
-        await signInWithGoogle()
-        //Redirecionando a outra pagina
-        history.push('/Question')
+        let userResponse = await signInWithGoogle()
+        // console.log(userResponse)
+        //Variaveis que armazenará a resposta e o id do Usuário
+        let responseDataUser, responseDataAnswer, userId = userResponse?.id
+
+        //JSON para realizar um GET 
+        const json = {"googleId":userId,
+        "address":CEP}
+
+        await api.get(`users/${userId}`)
+        .then(response => {
+            setData(response.data);
+            responseDataUser = response.status;
+        }).catch(error =>{
+          console.log(error);
+        })
+
+        console.log(`Users: ${responseDataUser}`)
+
+        if(responseDataUser === 200){      
+
+          await api.get(`answers/${userId}`)
+          .then(response => {
+              setData(response.data);
+              responseDataAnswer = response.status;
+          }).catch(error =>{
+            console.log(error);
+          })
+
+          console.log(`Answers: ${responseDataAnswer}`)
+
+          if(responseDataAnswer === 200)
+            history.push('/Home')
+          else 
+            history.push('/Question')
+        }
+        else if(responseDataUser !== 200 ){
+          if(CEP.length > 0){
+            await api.post(`users`,json)
+            .then(response => {
+                setData(response.data);
+                responseDataUser = response.data;
+            }).catch(error =>{
+              console.log(error);
+            })
+            console.log(`Users 1: ${responseDataUser}`)
+
+            alert('Usuário cadastrado com sucesso')
+          }
+          else{
+            alert('Usuário não cadastrado, preencha o campo CEP e tente novamente')
+            return
+          }
+        }
     }
 
     return(
@@ -87,26 +105,51 @@ export function Login() {
                         <TextField
                         variant="outlined"
                         margin="normal"
-                        required
                         fullWidth
                         id="address"
-                        label="Address"
+                        label="CEP"
                         name="address"
-                        autoComplete="address"
+                        autoComplete="CEP"
                         autoFocus
+                        onChange = {event => setCEP(event.target.value)}
                         />
                 </form>
                 <Button
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                        onClick = {handleQuestions}
-                        >
-                        Sign In
-                        </Button>
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    onClick = {handleLogin}
+                >
+                  Sign In
+                </Button>
             </div>
             </main>
         </div>
     )
 }
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: '100vh',
+  },
+  paper: {
+    margin: theme.spacing(8, 4),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    background: '#115293',
+  },
+  form: {
+    width: '100%', 
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+    background: '#115293',
+    color: '#fff',
+  },
+}));

@@ -9,7 +9,7 @@ type User = {
 
 type AuthContextType = {
   user: User | undefined;
-  signInWithGoogle: () => Promise<void>;
+  signInWithGoogle: () => Promise<User|undefined>;
 }
 
 type AuthContextProviderProps = {
@@ -60,6 +60,15 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
         name: displayName,
         avatar: photoURL
       })
+
+      let usuario:User = {
+        id: uid,
+        name: displayName,
+        avatar: photoURL
+      }
+
+      return usuario
+
     }
   }
   

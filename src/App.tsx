@@ -1,8 +1,7 @@
 //React Router DOM
 import { Route, BrowserRouter, Switch} from 'react-router-dom'
-
-
 import { AuthContextProvider } from './contexts/AuthContext';
+import axios from 'axios'
 
 //Componentes
 import { Login } from './pages/Login'
