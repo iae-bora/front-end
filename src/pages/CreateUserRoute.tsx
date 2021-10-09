@@ -29,7 +29,6 @@ export function CreateUserRoute() {
         
         let responseDataGet: any = undefined
         let responseDataPut: any = undefined
-        let responseDataPost: any = undefined
 
         await api.get(`answers/${user?.id}`)
         .then(response => {

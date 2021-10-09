@@ -5,16 +5,11 @@ import { useHistory } from 'react-router-dom';
 //SCSS
 import '../styles/question.scss';
 
-import api from '../services/api';
-
 type TouristPoint = {
     touristPoints: Array<any>
 }
 
 export function UserRoutes() {
-    // const [places, setPlaces] = useState('');
-    // const [date, setDate] = useState<Date | null>(new Date());
-    // const { user, signInWithGoogle } = useAuth()
     const history = useHistory();
     console.log(history.location)
 

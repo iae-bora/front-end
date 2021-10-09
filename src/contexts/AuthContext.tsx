@@ -49,20 +49,22 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
     const result = await auth.signInWithPopup(provider);
 
     if (result.user) {
-      const { displayName, photoURL, uid } = result.user
+      const { id } = result.additionalUserInfo?.profile as any;
+
+      const { displayName, photoURL } = result.user
 
       if (!displayName || !photoURL) {
         throw new Error('Missing information from Google Account.');
       }
 
       setUser({
-        id: uid,
+        id: id,
         name: displayName,
         avatar: photoURL
       })
 
       let usuario:User = {
-        id: uid,
+        id: id,
         name: displayName,
         avatar: photoURL
       }
