@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
     //#region Imports
     //Biblioteca responsavel por armazenar os parametros passados na rota da pagina
     import { FormEvent, useState } from 'react';

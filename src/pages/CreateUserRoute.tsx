@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Fragment, FormEvent, useState } from 'react';
 import { useAuth } from '../hooks/userAuth'
 import { useHistory } from 'react-router-dom';
