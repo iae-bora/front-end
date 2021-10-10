@@ -123,6 +123,8 @@
 
             //Realizando Requisição para pegar o endereço do usuário
             let responseData: any = undefined
+            console.log(user?.id);
+            
             await api.get(`users/${user?.id}`)
                 .then(response => {
                     responseData = response.data;

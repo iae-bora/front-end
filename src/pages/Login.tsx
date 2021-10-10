@@ -37,11 +37,12 @@ export function Login() {
         //Variaveis que armazenará a resposta e o id do Usuário
         let responseDataUser, responseDataAnswer, userId = userResponse?.id
 
-        console.log(`UserID: ${user?.id}`)
+        console.log(`UserID: ${userResponse?.id}`)
 
         //JSON para realizar um GET 
         const json = {"googleId":userId,
         "address":CEP}
+        history.push('/Question')
 
         await api.get(`users/${userId}`)
         .then(response => {
