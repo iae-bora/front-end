@@ -9,6 +9,7 @@
     import { Button } from '../components/Button';
     import { LabelQuestion } from '../components/LabelQuestion';
     import TextField from '@material-ui/core/TextField';
+    import { SideBar } from '../components/SideBar'
 
     //Alert - Material UI
     import Snackbar from '@material-ui/core/Snackbar';
@@ -69,37 +70,30 @@
         //#region Functions
         function handleAnswerQuestionOne(answerText: string) {
             positionAnswerOne = answersQuestionOne.indexOf(answerText);
-            console.log(`Resposta 1: ${positionAnswerOne} - ${answerText}`)
         }
 
         function handleAnswerQuestionTwo(answerText: string) {
             positionAnswerTwo = answersQuestionTwo.indexOf(answerText);
-            console.log(`Resposta 2: ${positionAnswerTwo} - ${answerText}`)
         }
 
         function handleAnswerQuestionThree(answerText: string) {
             positionAnswerThree = answersQuestionThree.indexOf(answerText);
-            console.log(`Resposta 3: ${positionAnswerThree} - ${answerText}`)
         }
 
         function handleAnswerQuestionFour(answerText: string) {
             positionAnswerFour = answersQuestionFour.indexOf(answerText);
-            console.log(`Resposta 4: ${positionAnswerFour} - ${answerText}`)
         }
 
         function handleAnswerQuestionFive(answerText: string) {
             positionAnswerFive = answersQuestionFive.indexOf(answerText);
-            console.log(`Resposta 5: ${positionAnswerFive} - ${answerText}`)
         }
 
         function handleAnswerQuestionSix(answerText: string) {
             positionAnswerSix = answersQuestionSix.indexOf(answerText);
-            console.log(`Resposta 6: ${positionAnswerSix} - ${answerText}`)
         }
 
         function handleAnswerQuestionSeven(answerText: string) {
             positionAnswerSeven = answersQuestionSeven.indexOf(answerText);
-            console.log(`Resposta 7: ${positionAnswerSeven} - ${answerText}`)
         }
 
         function handleSendJson(event: FormEvent) {
@@ -123,17 +117,20 @@
 
             //Realizando Requisição para pegar o endereço do usuário
             let responseData: any = undefined
-            console.log(user?.id);
+            let responseAnswer: any = undefined
+            let responseAnswerPut: any = undefined
+            let responseAnswerPost: any = undefined
+            let responseAnswerData: any = undefined
             
             await api.get(`users/${user?.id}`)
                 .then(response => {
                     responseData = response.data;
-                    console.log(responseData)
                 }).catch(error => {
                     console.log(error);
                 })
 
             if (responseData !== undefined) {
+
                 //Preenchendo JSON de envio  
                 var json = {
                     "musics": answersQuestionOne.indexOf(radioQuestion1),
@@ -144,29 +141,55 @@
                     "teams": answersQuestionFive.indexOf(radioQuestion5),
                     "haveChildren": answersQuestionSeven.indexOf(radioQuestion7),
                     "userAge": +age,
-                    "placesCount": +places,
+                    "placesCount": 0,
                     "user": {
                         "googleId": user?.id,
                         "address": responseData.address
                     }
                 }
-
-                console.log(json)
                 //#endregion
+
                 if (answers.includes('-1')) {
                     alert('Favor preencher todos as respostas corretamente')
                 }
                 else {
-                    await api.post(`answers`,JSON.stringify(json))
+                    await api.get(`answers/${user?.id}`)
                     .then(response => {
-                        responseData = response.status;
-                    }).catch(error =>{
+                        responseAnswer = response.status;
+                        responseAnswerData = response.data;
+                    }).catch(error => {
                         console.log(error);
                     })
+                    
+                    if(responseAnswer === 200){
+                        const answer = {
+                            ...responseAnswerData,
+                            ...json
+                        }
 
-                    if(responseData === 200){
+                        await api.put(`answers`,JSON.stringify(answer))
+                        .then(response => {
+                            responseAnswerPut = response.status;
+                        }).catch(error =>{
+                            console.log(error);
+                        })
+                    }
+                    else{
+                        await api.post(`answers`,JSON.stringify(json))
+                        .then(response => {
+                            responseAnswerPost = response.status;
+                        }).catch(error =>{
+                            console.log(error);
+                        })
+                    }
+
+                    if(responseAnswerPost === 200){
                         alert('Respostas salvas com sucesso')
-                        history.push('/Home')
+                        history.push('/CreateUserRoute')
+                    }
+                    else if(responseAnswerPut === 200){
+                        alert('Respostas atualizadas com sucesso')
+                        history.push('/CreateUserRoute')
                     }
                     else{
                         alert('Erro ao salvar as respostas')
@@ -184,15 +207,15 @@
             setOpen(false);
         };
 
-
         return (
             <div id="page-room">
-                <header>
+                <SideBar></SideBar>
+
+                {/* <header>
                     <div className="content">
-                        {/* <img src={logoImg} alt="iaeBora"/> */}
                         <h2>Definindo Perfil do Usuário</h2>
                     </div>
-                </header>   
+                </header>    */}
 
                 <main>
                     <form onSubmit={handleSendJson}>
@@ -315,21 +338,6 @@
                                 );
                             })}
                         </div>
-
-                        {/* Pergunta 8 */}
-                        <div className="question">
-                            Quantos lugares você deseja visitar?
-                            <br />
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                id="quantidadeLugares"
-                                label="Qtde de Lugares"
-                                // autoFocus
-                                onChange={event => { setPlaces(event.target.value); console.log(`Quantidade de Lugares: ${event.target.value}`) }}
-                            // onClick={()=>handleAnswerQuestionEight()}
-                            />
-                        </div>
                         {/* Pergunta 9 */}
                         <div className="question">
                             Qual sua idade?
@@ -344,24 +352,6 @@
                             // onClick={()=>handleAnswerQuestionEight()}
                             />
                         </div>
-                        {/* <div className="question">
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <Grid container justify='flex-start'>
-                                <KeyboardDatePicker
-                                    variant='dialog'
-                                    format='dd/MM/yyyy'
-                                    margin='normal'
-                                    id='date-picker'
-                                    label='Data de Nascimento'
-                                    value={selectedDate}
-                                    onChange={handleDateChange}
-                                    KeyboardButtonProps={{
-                                        'aria-label': 'change date'
-                                    }}
-                                />
-                            </Grid>
-                        </MuiPickersUtilsProvider>
-                    </div> */}
                         <div className="form-footer">
                             <Button
                                 type="submit"
@@ -374,10 +364,6 @@
                                     Respostas Enviadas com sucesso
                                 </Alert>
                             </Snackbar>
-                            {/* <Alert severity="error">This is an error message!</Alert>
-                                <Alert severity="warning">This is a warning message!</Alert>
-                                <Alert severity="info">This is an information message!</Alert>
-                                <Alert severity="success">This is a success message!</Alert> */}
                         </div>
                     </form>
                 </main>

@@ -11,20 +11,20 @@ export const SidebarData = [
     cName: 'nav-text'
   },
   {
-    title: 'Questions',
+    title: 'Perguntas',
     path: '/Question',
     icon: <AiIcons.AiFillQuestionCircle />,
     cName: 'nav-text'
   },
   {
-    title: 'Routes',
+    title: 'Criar Rotas',
     path: '/CreateUserRoute',
     icon: <FaIcons.FaCartPlus />,
     cName: 'nav-text'
   },
   {
-    title: 'Team',
-    path: '/team',
+    title: 'Feedback',
+    path: '/FeedBack',
     icon: <IoIcons.IoMdPeople />,
     cName: 'nav-text'
   },

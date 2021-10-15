@@ -42,7 +42,6 @@ export function Login() {
         //JSON para realizar um GET 
         const json = {"googleId":userId,
         "address":CEP}
-        history.push('/Question')
 
         await api.get(`users/${userId}`)
         .then(response => {
@@ -67,7 +66,7 @@ export function Login() {
           console.log(`Answers: ${responseDataAnswer}`)
 
           if(responseDataAnswer === 200)
-            history.push('/Home')
+            history.push('/CreateUserRoute')
           else 
             history.push('/Question')
         }
