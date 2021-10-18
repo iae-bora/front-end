@@ -59,6 +59,7 @@
   
       form {
         .question {
+          font-size: 20px;
           width: 100%;
           border: 0;
           padding: 16px;
@@ -83,6 +84,44 @@
           border: 1px solid rgba(0, 0, 0, 0.04);
           align-items: center;
           justify-content: center;
+        }
+
+        .cardRouteHistory {
+          width: 100%;
+          display: flex;
+          border: 0;
+          padding: 16px;
+          border-radius: 8px;
+          background: #fefefe;
+          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+          resize: vertical;
+          min-height: 130px;
+          border: 1px solid rgba(0, 0, 0, 0.04);
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+        }
+
+        .cardRouteFeedback {
+          width: 100%;
+          display: flex;
+          border: 0;
+          padding: 16px;
+          border-radius: 8px;
+          background: #EFF6F8;
+          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+          resize: vertical;
+          min-height: 130px;
+          border: 1px solid rgba(0, 0, 0, 0.04);
+          // align-items: center;
+          // justify-content: center;
+          flex-direction: column;
+          font-size: 15px !important;
+        }
+
+        .title{
+          font-size: 25px;
+          color: #0033C6;
         }
 
         & .question{

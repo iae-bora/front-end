@@ -224,6 +224,7 @@
                         <div className="question">
                             Qual gênero musical você mais gosta?
                             <br />
+                            <br />
                             {answersQuestionOne.map(answer => {
                                 return (
                                     <LabelQuestion
@@ -240,6 +241,7 @@
                         {/* Pergunta 2 */}
                         <div className="question">
                             Qual o seu tipo de comida favorito?
+                            <br />
                             <br />
                             {answersQuestionTwo.map(answer => {
                                 return (
@@ -258,6 +260,7 @@
                         <div className="question">
                             Qual o seu estilo de filme favorito?
                             <br />
+                            <br />
                             {answersQuestionThree.map(answer => {
                                 return (
                                     <LabelQuestion
@@ -274,6 +277,7 @@
                         {/* Pergunta 4 */}
                         <div className="question">
                             Qual seu esporte favorito?
+                            <br />
                             <br />
                             {answersQuestionFour.map(answer => {
                                 return (
@@ -292,6 +296,7 @@
                         <div className="question">
                             Torce para algum time?
                             <br />
+                            <br />
                             {answersQuestionFive.map(answer => {
                                 return (
                                     <LabelQuestion
@@ -308,6 +313,7 @@
                         {/* Pergunta 6 */}
                         <div className="question">
                             Possui alguma religião?
+                            <br />
                             <br />
                             {answersQuestionSix.map(answer => {
                                 return (
@@ -326,6 +332,7 @@
                         <div className="question">
                             Tem filhos?
                             <br />
+                            <br />
                             {answersQuestionSeven.map(answer => {
                                 return (
                                     <LabelQuestion
@@ -341,6 +348,7 @@
                         {/* Pergunta 9 */}
                         <div className="question">
                             Qual sua idade?
+                            <br />
                             <br />
                             <TextField
                                 variant="outlined"
