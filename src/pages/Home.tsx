@@ -60,7 +60,7 @@ export function Home() {
         <div id="page-room">
             <SideBar></SideBar>
             <main>
-                <form >
+                <form className='routes-list'>
                     {
                         routes &&
                         routes.map(route => {
