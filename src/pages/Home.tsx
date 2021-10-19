@@ -13,7 +13,7 @@ interface Route {
     id: number;
     routeDate: string;
     touristPoints: Array<TouristPoint>;
-    // feedbacks: Array<FeedBack>;
+    // routes: {id:number;};
 }
 
 interface TouristPoint {
@@ -43,26 +43,16 @@ export function Home() {
         const handleRoutes = async () => {
             await api.get(`Routes/all/${user?.id}`)
                 .then(response => {
-                    setRoutes(response.data);
+                    const routesGet = response.data.filter((route : Route) => {
+                        return route.touristPoints.length > 0
+                    })
+                    setRoutes(routesGet);
+                    console.log(routesGet)
                 }).catch(error => {
                     console.log(error);
                 })
         }
-        // const handleFeedBack = async () => {
-        //     await api.get(`feedback/${user?.id}`)
-        //         .then(response => {
-        //             setFeedbacks(response.data);
-        //             // console.log(response.data)
-        //         }).catch(error => {
-        //             console.log(error);
-        //         })
-        // }
-
         handleRoutes()
-        // handleFeedBack()
-
-        // console.log(routes)
-        // console.log(feedbacks)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

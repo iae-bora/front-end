@@ -20,17 +20,17 @@ const style = {
 
 function ChildModal(props: { history: any, id: number }) {
     const [open, setOpen] = React.useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const handleOpen = () => {
         setOpen(true);
     };
     const handleClose = () => {
         setOpen(false);
     };
-    // https://pt-br.reactjs.org/docs/add-react-to-a-website.html
     return (
         <React.Fragment>
             <Button>
-            <a href="https://forms.gle/sFc6VLs9oWtCzEAz9">Pesquisa Google</a>
+            <a target = "_blank" rel="noreferrer" href="https://forms.gle/sFc6VLs9oWtCzEAz9">Pesquisa Google</a>
             </Button>
             <Button onClick={() =>
                 props.history.push('/FeedBack', {id: props.id})
@@ -73,10 +73,6 @@ export function NestedModal(props: { children: ReactNode, history: any, id: numb
                 aria-describedby="parent-modal-description"
             >
                 <Box sx={{ ...style, width: 400 }}>
-                    {/* <h2 id="parent-modal-title">Text in a modal</h2> */}
-                    {/* <p id="parent-modal-description">
-                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                    </p> */}
                     <ChildModal history = {props.history} id={props.id} />
                 </Box>
             </Modal>
