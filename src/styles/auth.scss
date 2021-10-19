@@ -1,7 +1,13 @@
 #page-auth{
     display: flex;
+    flex-wrap: wrap;
     align-items: stretch;
     height: 100vh;
+
+    @media screen and (max-width: 600px) {
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
 
     aside{
         flex: 7;
@@ -14,6 +20,10 @@
         justify-content: center;
         
         padding: 120px 80px;
+
+        @media screen and (max-width: 600px) {
+            width: 100%;
+        }
     }
 
         strong{
@@ -32,6 +42,10 @@
         main{
             flex: 8;
             margin-top: 100px;
+
+            @media screen and (max-width: 600px) {
+                width: 100%;
+            }
         }
 }
 
