@@ -115,6 +115,8 @@ export function CreateUserRoute() {
                                     inputVariant="outlined"
                                     value={date}
                                     onChange={setDate}
+                                    format="dd/MM/yyyy HH:mm"
+                                    ampm={false}
                                 />
                             </MuiPickersUtilsProvider>
                         </Fragment>

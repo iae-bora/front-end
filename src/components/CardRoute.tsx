@@ -5,6 +5,7 @@ import CardActionArea from '@material-ui/core/CardActionArea'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Typography from '@material-ui/core/Typography';
+import { format } from 'date-fns';
 // import Button from '@material-ui/core/Button'
 
 import '../styles/question.scss';
@@ -25,6 +26,13 @@ type CardRouteProps = {
 }
 
 export function CardRoute(props: CardRouteProps) {
+    console.log(props.startHour);
+    const setByTimezone = (datetime: string) => {
+        const date: Date = new Date(datetime);
+        const userTimezoneOffset = date.getTimezoneOffset() * 60000;
+        return new Date(date.getTime() + userTimezoneOffset);
+    }
+
     return (
         <div>
             <Card style={{ width: "400px" }}>
@@ -42,13 +50,13 @@ export function CardRoute(props: CardRouteProps) {
                             <b>Endereço:</b> {props.address}
                         </Typography>
                         <Typography variant="body2">
-                            <b>Abertura:</b> {props.startHour}
+                            <b>Abertura:</b> {format(setByTimezone(props.startHour), 'dd/MM/yyyy HH:mm')}
                         </Typography>
                         <Typography variant="body2">
-                            <b>Fechamento:</b> {props.endHour}
+                            <b>Fechamento:</b> {format(setByTimezone(props.endHour), 'dd/MM/yyyy HH:mm')}
                         </Typography>
                         <Typography variant="body2">
-                            <b>Distância:</b> {props.distanceFromOrigin}
+                            <b>Distância:</b> {(Number(props.distanceFromOrigin) / 1000).toFixed(2)} km
                         </Typography>
                         <Typography variant="body2">
                             <b>Categoria:</b> {props.category}
