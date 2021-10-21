@@ -2,6 +2,10 @@
 // import { DateTimePicker } from "@material-ui/pickers";
 import { useHistory } from 'react-router-dom';
 
+import { CardRoute } from '../components/CardRoute'
+
+import { SideBar } from '../components/SideBar'
+
 //SCSS
 import '../styles/question.scss';
 
@@ -11,16 +15,16 @@ type TouristPoint = {
 
 export function UserRoutes() {
     const history = useHistory();
-    console.log(history.location)
 
     const touristPoints = history.location.state as Array<TouristPoint>
 
-    const categories =  [
+    const categories = [
         "Parque",
         "Museu",
         "Cinema",
         "Shopping",
         "Bar",
+        "Restaurante",
         "Show",
         "Biblioteca",
         "Estádio",
@@ -30,27 +34,27 @@ export function UserRoutes() {
 
     return (
         <div id="page-room">
-            <header>
-                <div className="content">
-                    <h2>Rotas Criadas</h2>
-                </div>
-            </header>
-
+            <SideBar></SideBar>
             <main>
                 <form>
-                    {touristPoints[0].touristPoints.map(route =>{
-                        return(
-                            <div className="question">
-                                <h1>{route.openingHours.place.name}</h1>
-                                <h3>{route.openingHours.place.address}</h3>
-                                <img alt={route.openingHours.place.name} src={route.openingHours.place.image}/>
-                                <h3>{route.openingHours.place.rating}</h3>
-                                <h3>{route.startHour} - {route.endHour}</h3>
-                                <h3>{route.distanceFromOrigin}</h3>
-                                <h3>{categories[route.openingHours.place.category -1]}</h3>
-                            </div>
-                        );
-                    })}
+                    {
+                        touristPoints[0].touristPoints.map(route => {
+                            return (
+                                <div className="cardRoute">
+                                    <CardRoute
+                                        name={route.openingHours.place.name}
+                                        address={route.openingHours.place.address}
+                                        image={route.openingHours.place.image}
+                                        rating={route.openingHours.place.rating}
+                                        startHour={route.startHour}
+                                        endHour={route.endHour}
+                                        distanceFromOrigin={route.distanceFromOrigin}
+                                        category={categories[route.openingHours.place.category - 1]}
+                                    >
+                                    </CardRoute>
+                                </div>
+                            );
+                        })}
                 </form>
             </main>
         </div>

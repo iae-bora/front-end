@@ -6,25 +6,25 @@ import * as IoIcons from 'react-icons/io';
 export const SidebarData = [
   {
     title: 'Home',
-    path: '/',
+    path: '/Home',
     icon: <AiIcons.AiFillHome />,
     cName: 'nav-text'
   },
   {
-    title: 'Questions',
+    title: 'Perguntas',
     path: '/Question',
     icon: <AiIcons.AiFillQuestionCircle />,
     cName: 'nav-text'
   },
   {
-    title: 'Routes',
+    title: 'Criar Rotas',
     path: '/CreateUserRoute',
     icon: <FaIcons.FaCartPlus />,
     cName: 'nav-text'
   },
   {
-    title: 'Team',
-    path: '/team',
+    title: 'Feedback',
+    path: '/FeedBack',
     icon: <IoIcons.IoMdPeople />,
     cName: 'nav-text'
   },

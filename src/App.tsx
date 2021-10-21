@@ -8,6 +8,8 @@ import { Question } from './pages/Question';
 import { Home } from './pages/Home';
 import { CreateUserRoute } from './pages/CreateUserRoute'
 import { UserRoutes } from './pages/UserRoutes'
+import { FeedBack } from './pages/FeedBack'
+
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
         <Route path="/Home" component={Home}/>
         <Route path="/CreateUserRoute" component={CreateUserRoute}/>
         <Route path="/UserRoutes" component={UserRoutes}/>
+        <Route path="/FeedBack" component={FeedBack}/>
       </Switch>
       </AuthContextProvider>
     </BrowserRouter>

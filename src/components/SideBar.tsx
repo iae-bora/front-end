@@ -8,23 +8,29 @@ import { SidebarData } from './SideBarData';
 import '../styles/navBar.scss';
 
 export function SideBar() {
-    const [sidebar, setSidebar] = useState(false);
+  const [sidebar, setSidebar] = useState(false);
 
-    const showSidebar = () => setSidebar(!sidebar);
+  const showSidebar = () => setSidebar(!sidebar);
 
-    return (
-        <>
+  return (
+    <>
       <IconContext.Provider value={{ color: '#fff' }}>
         <div className='navbar'>
           <Link to='#' className='menu-bars'>
-            <FaIcons.FaBars onClick={showSidebar} />
+            <FaIcons.FaBars onClick={e => {
+              e.preventDefault();
+              showSidebar();
+            }} />
           </Link>
         </div>
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-          <ul className='nav-menu-items' onClick={showSidebar}>
+          <ul className='nav-menu-items' onClick={e => {
+            e.preventDefault();
+            showSidebar();
+          }}>
             <li className='navbar-toggle'>
               <Link to='#' className='menu-bars'>
-                <AiIcons.AiOutlineClose />
+                <AiIcons.AiOutlineClose onClick={e => e.preventDefault()}/>
               </Link>
             </li>
             {SidebarData.map((item, index) => {
@@ -40,6 +46,6 @@ export function SideBar() {
           </ul>
         </nav>
       </IconContext.Provider>
-        </>
-    )
+    </>
+  )
 }
