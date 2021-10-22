@@ -6,7 +6,6 @@ import { CardRoute } from '../components/CardRoute'
 
 import { SideBar } from '../components/SideBar'
 
-
 //SCSS
 import '../styles/question.scss';
 
@@ -36,30 +35,26 @@ export function UserRoutes() {
     return (
         <div id="page-room">
             <SideBar></SideBar>
-            {/* <header>
-                <div className="content">
-                    <h2>Rotas Criadas</h2>
-                </div>
-            </header> */}
             <main style={{margin: 40}}>
-                <form >
-                    {touristPoints[0].touristPoints.map(route => {
-                        return (
-                            <div key={route.id} className="cardRoute">
-                                <CardRoute
-                                    name={route.openingHours.place.name}
-                                    address={route.openingHours.place.address}
-                                    image={route.openingHours.place.image}
-                                    rating={route.openingHours.place.rating}
-                                    startHour={route.startHour}
-                                    endHour={route.endHour}
-                                    distanceFromOrigin={route.distanceFromOrigin}
-                                    category={categories[route.openingHours.place.category - 1]}
-                                >
-                                </CardRoute>
-                            </div>
-                        );
-                    })}
+                <form>
+                    {
+                        touristPoints[0].touristPoints.map(route => {
+                            return (
+                                <div className="cardRoute">
+                                    <CardRoute
+                                        name={route.openingHours.place.name}
+                                        address={route.openingHours.place.address}
+                                        image={route.openingHours.place.image}
+                                        rating={route.openingHours.place.rating}
+                                        startHour={route.startHour}
+                                        endHour={route.endHour}
+                                        distanceFromOrigin={route.distanceFromOrigin}
+                                        category={categories[route.openingHours.place.category - 1]}
+                                    >
+                                    </CardRoute>
+                                </div>
+                            );
+                        })}
                 </form>
             </main>
         </div>

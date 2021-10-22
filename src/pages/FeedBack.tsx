@@ -16,6 +16,7 @@ import '../styles/question.scss';
 
 interface FeedBack {
     id: number;
+    route: {id:number;};
     text: string;
     rating: number;
 }
@@ -31,15 +32,18 @@ export function FeedBack() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [rating, setRating] = useState<number | null>(0);
 
-    const [feedbacks, setFeedbacks] = useState<Array<any>>();
+    const [feedbacks, setFeedbacks] = useState<Array<FeedBack>>();
 
     useEffect(() => {
 
         const handleFeedBack = async () => {
             await api.get(`feedback/${user?.id}`)
                 .then(response => {
-                    setFeedbacks(response.data);
-                    console.log(response.data)
+                    const feedbackGet = response.data.filter((feedback: FeedBack) =>{
+                        return feedback.route.id === location.state.id
+                    });
+                    setFeedbacks(feedbackGet)
+                    console.log(feedbackGet)
                 }).catch(error => {
                     console.log(error);
                 })
@@ -50,23 +54,18 @@ export function FeedBack() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-
     const history = useHistory();
 
     const location = history.location as any
-    // console.log(history.location.state.id)
-
-
-
-    var json = {
-        "text": text,
-        "rating": rating,
-        "userRouteId": location.state.id
-    }
-
 
     const handleFeedBack = async (event: FormEvent) => {
         event.preventDefault();
+
+        var json = {
+            "text": text,
+            "rating": rating,
+            "userRouteId": location.state.id
+        }
 
         console.log(json)
 
@@ -93,9 +92,7 @@ export function FeedBack() {
                             maxRows={4}
                             label="FeedBack"
                             fullWidth
-                            // autoFocus
                             onChange={event => { setText(event.target.value); console.log(`Text: ${event.target.value}`) }}
-                        // onClick={()=>handleAnswerQuestionEight()}
                         />
                     </div>
 
@@ -126,18 +123,35 @@ export function FeedBack() {
                             feedbacks &&
                             feedbacks.map(feedback => {
                                 return (
-                                    <div className="cardRouteFeedback">
+                                    <div className="cardRouteFeedback">   
                                         <div>{feedback.text}</div>
                                         <br />
-                                        <br />
                                         <Rating
-                                            value={feedback.rating} 
-                                            precision={0.25} 
+                                            value={feedback.rating}
+                                            precision={0.25}
                                             readOnly
                                         ></Rating>
                                     </div>
                                 )
                             })
+
+
+
+                            // feedbacks &&
+                            // feedbacks.filter(feedback => {
+                            //     return (
+                            //         <div className="cardRouteFeedback">
+                            //             <div>{feedback.text}</div>
+                            //             <br />
+                            //             <br />
+                            //             <Rating
+                            //                 value={feedback.rating} 
+                            //                 precision={0.25} 
+                            //                 readOnly
+                            //             ></Rating>
+                            //         </div>
+                            //     )
+                            // })
                         }
                     </div>
                 </form>
