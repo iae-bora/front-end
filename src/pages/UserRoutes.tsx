@@ -41,11 +41,11 @@ export function UserRoutes() {
                     <h2>Rotas Criadas</h2>
                 </div>
             </header> */}
-            <main>
+            <main style={{margin: 40}}>
                 <form >
                     {touristPoints[0].touristPoints.map(route => {
                         return (
-                            <div className="cardRoute">
+                            <div key={route.id} className="cardRoute">
                                 <CardRoute
                                     name={route.openingHours.place.name}
                                     address={route.openingHours.place.address}

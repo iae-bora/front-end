@@ -105,13 +105,13 @@ export function CreateUserRoute() {
                     </div>
 
                     <div className="question">
-                        Data e Hora de Inicio do passeio
+                        Data e Hora de início do passeio
                         <br />
                         <br />
                         <Fragment>
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                 <DateTimePicker
-                                    label="Inicio"
+                                    label="Início"
                                     inputVariant="outlined"
                                     value={date}
                                     onChange={setDate}
