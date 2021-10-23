@@ -5,10 +5,11 @@ import CardActionArea from '@material-ui/core/CardActionArea'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Typography from '@material-ui/core/Typography';
-// import Button from '@material-ui/core/Button'
+import moment from 'moment-timezone';
 
 import '../styles/question.scss';
 
+import Logo from '../assets/images/Logo.svg';
 
 import { Rate } from './Rate'
 
@@ -32,7 +33,11 @@ export function CardRoute(props: CardRouteProps) {
                     <CardMedia
                         component="img"
                         height="400"
-                        image={props.image}
+                        image={
+                            props.image?
+                            props.image
+                            : Logo
+                        }
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
@@ -42,13 +47,13 @@ export function CardRoute(props: CardRouteProps) {
                             <b>Endereço:</b> {props.address}
                         </Typography>
                         <Typography variant="body2">
-                            <b>Abertura:</b> {props.startHour}
+                            <b>Entrada:</b> {moment.tz(props.startHour, 'UTC').format('HH:mm')}
                         </Typography>
                         <Typography variant="body2">
-                            <b>Fechamento:</b> {props.endHour}
+                            <b>Saída:</b> {moment.tz(props.endHour, 'UTC').format('HH:mm')}
                         </Typography>
                         <Typography variant="body2">
-                            <b>Distância:</b> {props.distanceFromOrigin}
+                            <b>Distância para o ponto anterior:</b> {(Number(props.distanceFromOrigin) / 1000).toFixed(2)} km
                         </Typography>
                         <Typography variant="body2">
                             <b>Categoria:</b> {props.category}

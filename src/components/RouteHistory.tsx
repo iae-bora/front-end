@@ -1,12 +1,11 @@
-import '../styles/question.scss'
-
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import moment from 'moment-timezone';
 
 import { useAuth } from '../hooks/userAuth'
-
-import { useHistory } from 'react-router-dom';
-
 import { NestedModal } from '../components/Modal'
+
+import '../styles/question.scss'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
@@ -72,10 +71,12 @@ export function RouteHistory(props: RouteHistoryProps) {
     return (
         <NestedModal key={props.id} history={history} id={props.id}>
             <div className="cardRouteHistory">
-                {props.routeDate}
+                <p style={{ fontWeight: 'bolder', fontSize: 20 }}>
+                    Data: {moment.tz(props.routeDate, 'UTC').format('DD/MM/yyyy')}
+                </p>
                 {props.touristPoints.map(touristPoints => {
                     return (
-                        <div onClick={() => { setOpen(true) }
+                        <div key={touristPoints.id} onClick={() => { setOpen(true) }
                         }>{touristPoints.openingHours.place.name}</div>
                     )
                 })}

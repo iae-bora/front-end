@@ -41,6 +41,11 @@ export function CreateUserRoute() {
     async function handleCreateRoute(event: FormEvent) {
         event.preventDefault();
 
+        console.log(places)
+        if(places === '' || parseInt(places) <= 0 || parseInt(places) > 10 ){
+            return alert("Preencher uma quantidade de lugares válida entre 1 e 10")
+        }
+
         let responseDataGet: any = undefined
         let responseDataPut: any = undefined
         setLoading(true);
@@ -69,7 +74,7 @@ export function CreateUserRoute() {
                     console.log(error);
                 })
 
-            if (responseDataPut === 200) {
+            if (responseDataPut === 200 ) {
 
                 await api.post(`Routes`, JSON.stringify(json))
                     .then(response => {
@@ -105,16 +110,18 @@ export function CreateUserRoute() {
                     </div>
 
                     <div className="question">
-                        Data e Hora de Inicio do passeio
+                        Data e Hora de início do passeio
                         <br />
                         <br />
                         <Fragment>
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                 <DateTimePicker
-                                    label="Inicio"
+                                    label="Início"
                                     inputVariant="outlined"
                                     value={date}
                                     onChange={setDate}
+                                    format="dd/MM/yyyy HH:mm"
+                                    ampm={false}
                                 />
                             </MuiPickersUtilsProvider>
                         </Fragment>

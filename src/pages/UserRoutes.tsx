@@ -35,8 +35,8 @@ export function UserRoutes() {
     return (
         <div id="page-room">
             <SideBar></SideBar>
-            <main>
-                <form>
+            <main style={{marginTop: 40}}>
+                <form className= 'routes-list'>
                     {
                         touristPoints[0].touristPoints.map(route => {
                             return (

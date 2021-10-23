@@ -23,8 +23,6 @@ interface FeedBack {
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export function FeedBack() {
-
-
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { user, signInWithGoogle } = useAuth()
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

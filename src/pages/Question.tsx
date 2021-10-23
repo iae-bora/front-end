@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
     //#region Imports
     //Biblioteca responsavel por armazenar os parametros passados na rota da pagina
-    import { FormEvent, useState } from 'react';
+    import { FormEvent, useState, useEffect } from 'react';
     import { useHistory } from 'react-router-dom';
     import { useAuth } from '../hooks/userAuth'
 
@@ -39,6 +39,8 @@
         //#region Variaveis
         const history = useHistory();
 
+        // const responseDataGet: any = undefined
+
         //States de cada uma das perguntas
         const [radioQuestion1, setRadioQuestion1] = useState('');
         const [radioQuestion2, setRadioQuestion2] = useState('');
@@ -66,6 +68,35 @@
             positionAnswerSix: number,
             positionAnswerSeven: number;
         //#endregion
+
+        useEffect(() => {
+            
+            const handleAnswers = async () => {
+                await api.get(`answers/${user?.id}`)
+                .then(response => {
+                    const responseDataGet = response.data;
+                    if(responseDataGet !== undefined){
+                        console.log(responseDataGet)
+                        setRadioQuestion1(answersQuestionOne[responseDataGet['musics']])
+                        setRadioQuestion2(answersQuestionTwo[responseDataGet['food']])
+                        setRadioQuestion3(answersQuestionThree[responseDataGet['movies']])
+                        setRadioQuestion4(answersQuestionFour[responseDataGet['sports']])    
+                        setRadioQuestion5(answersQuestionFive[responseDataGet['teams']])    
+                        setRadioQuestion6(answersQuestionSix[responseDataGet['religion']])    
+                        setRadioQuestion7(answersQuestionSeven[responseDataGet['haveChildren']]) 
+                        setAge(responseDataGet['userAge'].toString()) 
+                        console.log(responseDataGet['userAge'].toString())  
+                        console.log(responseDataGet['musics'])
+                    }
+                }).catch(error => {
+                    console.log(error);
+                })
+            }
+
+            handleAnswers()
+    
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [])
 
         //#region Functions
         function handleAnswerQuestionOne(answerText: string) {
@@ -149,7 +180,7 @@
                 }
                 //#endregion
 
-                if (answers.includes('-1')) {
+                if (answers.includes('-1') || age==='' || age <= '0') {
                     alert('Favor preencher todos as respostas corretamente')
                 }
                 else {
@@ -210,12 +241,6 @@
         return (
             <div id="page-room">
                 <SideBar></SideBar>
-
-                {/* <header>
-                    <div className="content">
-                        <h2>Definindo Perfil do Usuário</h2>
-                    </div>
-                </header>    */}
 
                 <main>
                     <form onSubmit={handleSendJson}>
@@ -355,7 +380,7 @@
                                 margin="normal"
                                 id="age"
                                 label="Informe sua idade"
-                                // autoFocus
+                                value = {age}
                                 onChange={event => { setAge(event.target.value); console.log(`Age: ${event.target.value}`) }}
                             // onClick={()=>handleAnswerQuestionEight()}
                             />
@@ -367,11 +392,11 @@
                             >
                                 Enviar Respostas
                             </Button>
-                            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                            {/* <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                                 <Alert onClose={handleClose} severity="success">
                                     Respostas Enviadas com sucesso
                                 </Alert>
-                            </Snackbar>
+                            </Snackbar> */}
                         </div>
                     </form>
                 </main>
