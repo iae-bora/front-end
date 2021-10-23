@@ -6,10 +6,10 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Typography from '@material-ui/core/Typography';
 import moment from 'moment-timezone';
-// import Button from '@material-ui/core/Button'
 
 import '../styles/question.scss';
 
+import Logo from '../assets/images/Logo.svg';
 
 import { Rate } from './Rate'
 
@@ -33,7 +33,11 @@ export function CardRoute(props: CardRouteProps) {
                     <CardMedia
                         component="img"
                         height="400"
-                        image={props.image}
+                        image={
+                            props.image?
+                            props.image
+                            : Logo
+                        }
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">

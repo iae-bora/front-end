@@ -41,6 +41,11 @@ export function CreateUserRoute() {
     async function handleCreateRoute(event: FormEvent) {
         event.preventDefault();
 
+        console.log(places)
+        if(places === '' || parseInt(places) <= 0 || parseInt(places) > 10 ){
+            return alert("Preencher uma quantidade de lugares válida entre 1 e 10")
+        }
+
         let responseDataGet: any = undefined
         let responseDataPut: any = undefined
         setLoading(true);
@@ -69,7 +74,7 @@ export function CreateUserRoute() {
                     console.log(error);
                 })
 
-            if (responseDataPut === 200) {
+            if (responseDataPut === 200 ) {
 
                 await api.post(`Routes`, JSON.stringify(json))
                     .then(response => {
