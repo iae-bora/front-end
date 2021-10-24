@@ -76,7 +76,6 @@
                 .then(response => {
                     const responseDataGet = response.data;
                     if(responseDataGet !== undefined){
-                        console.log(responseDataGet)
                         setRadioQuestion1(answersQuestionOne[responseDataGet['musics']])
                         setRadioQuestion2(answersQuestionTwo[responseDataGet['food']])
                         setRadioQuestion3(answersQuestionThree[responseDataGet['movies']])
@@ -85,8 +84,6 @@
                         setRadioQuestion6(answersQuestionSix[responseDataGet['religion']])    
                         setRadioQuestion7(answersQuestionSeven[responseDataGet['haveChildren']]) 
                         setAge(responseDataGet['userAge'].toString()) 
-                        console.log(responseDataGet['userAge'].toString())  
-                        console.log(responseDataGet['musics'])
                     }
                 }).catch(error => {
                     console.log(error);
@@ -381,7 +378,7 @@
                                 id="age"
                                 label="Informe sua idade"
                                 value = {age}
-                                onChange={event => { setAge(event.target.value); console.log(`Age: ${event.target.value}`) }}
+                                onChange={event => { setAge(event.target.value)}}
                             // onClick={()=>handleAnswerQuestionEight()}
                             />
                         </div>

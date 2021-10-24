@@ -47,7 +47,6 @@ export function Home() {
                         return route.touristPoints.length > 0
                     })
                     setRoutes(routesGet);
-                    console.log(routesGet)
                 }).catch(error => {
                     console.log(error);
                 })

@@ -30,18 +30,13 @@ export function CreateUserRoute() {
     const { user, signInWithGoogle } = useAuth()
     const history = useHistory();
 
-    let placesNew: Boolean = true
-
-
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNewPlaces(event.target.checked);
-        console.log(newPlaces)
     };
 
     async function handleCreateRoute(event: FormEvent) {
         event.preventDefault();
 
-        console.log(places)
         if(places === '' || parseInt(places) <= 0 || parseInt(places) > 10 ){
             return alert("Preencher uma quantidade de lugares válida entre 1 e 10")
         }
@@ -64,8 +59,6 @@ export function CreateUserRoute() {
                 "takeNewPlaces": newPlaces,
                 "routeDateAndTime": date ? `${format(date, 'yyyy-MM-dd')}T${format(date, 'HH:mm:ss.000')}Z` : null
             }
-
-            console.log(json)
 
             await api.put(`answers`, JSON.stringify(json))
                 .then(response => {
@@ -105,7 +98,7 @@ export function CreateUserRoute() {
                             InputLabelProps={{
                                 shrink: true,
                             }}
-                            onChange={event => { setPlaces(event.target.value); console.log(`Quantidade de Lugares: ${event.target.value}`) }}
+                            onChange={event => { setPlaces(event.target.value)}}
                         />
                     </div>
 
