@@ -4,9 +4,9 @@ import * as AiIcons from 'react-icons/ai';
 
 export const SidebarData = [
   {
-    title: 'Home',
+    title: 'Histórico',
     path: '/Home',
-    icon: <AiIcons.AiFillHome />,
+    icon: <AiIcons.AiOutlineHistory />,
     cName: 'nav-text'
   },
   {

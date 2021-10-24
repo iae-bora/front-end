@@ -41,7 +41,6 @@ export function FeedBack() {
                         return feedback.route.id === location.state.id
                     });
                     setFeedbacks(feedbackGet)
-                    console.log(feedbackGet)
                 }).catch(error => {
                     console.log(error);
                 })
@@ -64,8 +63,6 @@ export function FeedBack() {
             "rating": rating,
             "userRouteId": location.state.id
         }
-
-        console.log(json)
 
         await api.post(`feedback`, JSON.stringify(json))
             .then(response => {
@@ -90,7 +87,7 @@ export function FeedBack() {
                             maxRows={4}
                             label="FeedBack"
                             fullWidth
-                            onChange={event => { setText(event.target.value); console.log(`Text: ${event.target.value}`) }}
+                            onChange={event => { setText(event.target.value)}}
                         />
                     </div>
 
@@ -132,24 +129,6 @@ export function FeedBack() {
                                     </div>
                                 )
                             })
-
-
-
-                            // feedbacks &&
-                            // feedbacks.filter(feedback => {
-                            //     return (
-                            //         <div className="cardRouteFeedback">
-                            //             <div>{feedback.text}</div>
-                            //             <br />
-                            //             <br />
-                            //             <Rating
-                            //                 value={feedback.rating} 
-                            //                 precision={0.25} 
-                            //                 readOnly
-                            //             ></Rating>
-                            //         </div>
-                            //     )
-                            // })
                         }
                     </div>
                 </form>
