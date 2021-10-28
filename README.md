@@ -39,4 +39,4 @@ You can check the other projects of the IAe, Bora? solution by clicking on the l
 - Install the dependencies with `yarn install`
 - Start the server with `yarn start`
 
-It will open a web page in **https://http://localhost:3000**, then you can run it using the browser. 
+It will open a web page in **https://localhost:3000**, then you can run it using the browser. 
