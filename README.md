@@ -5,7 +5,7 @@
 <p align="center">
   <a href="#book-about">About</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#%EF%B8%8F-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#page_facing_up-other-projects">Other projects</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#cityscape-solution-architecture">Solution architecture</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-running-the-page-web">Running the Page Web</a>
 </p>
 
@@ -26,13 +26,17 @@ This is the Front End Web of IAe, Bora? project and it was developed with React 
 - [SCSS](https://sass-lang.com/)
 - [Yarn](https://yarnpkg.com/)
 
+## :cityscape: Solution architecture
+This repository is represented by the number 5 in the architecture, if you want to view the other repositories of the solution, click on one of the items below:
 
-## :page_facing_up: Other projects
-You can check the other projects of the IAe, Bora? solution by clicking on the links:
-- [Mobile](https://github.com/iae-bora/mobile)
-- [Front-End](https://github.com/iae-bora/front-end)
-- [Web Crawler](https://github.com/iae-bora/abc-tourism-crawler)
-- [Machine Learning](https://github.com/iae-bora/ml-api)
+<p align="center">
+  <img src="architecture.png"/>
+</p>
+
+- [(1) Web Crawler](https://github.com/iae-bora/abc-tourism-crawler)
+- [(3) Machine Learning](https://github.com/iae-bora/ml-api)
+- [(4) Back-End](https://github.com/iae-bora/back-end)
+- [(6) Mobile](https://github.com/iae-bora/mobile)
 
 ## 🚀 Running the Page Web
 
